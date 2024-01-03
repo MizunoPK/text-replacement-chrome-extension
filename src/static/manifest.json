@@ -1,0 +1,30 @@
+{
+  "name": "Text Replacement",
+  "description": "Replaces instances of text on a page with new content.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Text Replacement",
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ]
+}

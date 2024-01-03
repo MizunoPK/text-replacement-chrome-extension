@@ -1,0 +1,1 @@
+# Simple extension for replacing text on a page. Allows a user to list what text to replace with what.
