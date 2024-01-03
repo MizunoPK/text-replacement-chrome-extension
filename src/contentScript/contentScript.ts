@@ -16,10 +16,29 @@ function replaceGlobal(node: Node) {
 // Recurssive portion - loops through each text node and does the replacement
 function replaceTextNodes(node: Node, replacement : TextReplacement) {
     if (node.nodeType === Node.TEXT_NODE) {
-        node.nodeValue = node.nodeValue.replace(new RegExp(replacement.from, 'gi'), replacement.to);
-      } else {
-        for (const childNode of node.childNodes) {
-          replaceTextNodes(childNode, replacement);
+        if (node.nodeValue) {
+          node.nodeValue = node.nodeValue.replace(new RegExp(replacement.from, 'gi'), replacement.to);
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as HTMLElement;
+    
+        // Replace text in links (anchor elements)
+        if (element.tagName === 'A' || element.tagName === 'a') {
+          if (element.textContent) {
+            element.textContent = element.textContent.replace(new RegExp(replacement.from, 'gi'), replacement.to);
+          }
+        }
+    
+        // Replace text in buttons
+        if (element.tagName === 'BUTTON' || element.tagName === 'button') {
+          if (element.textContent) {
+            element.textContent = element.textContent.replace(new RegExp(replacement.from, 'gi'), replacement.to);
+          }
+        }
+    
+        // Recursively process child nodes
+        for (const childNode of Array.from(element.childNodes)) {
+          replaceTextNodes(childNode as Node, replacement);
         }
       }
   }
